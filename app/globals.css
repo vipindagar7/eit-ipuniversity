@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 250 249 246; /* paper */
+  --muted-foreground: 91 100 114; /* slate-500 */
+}
+
+.dark {
+  --background: 10 15 34; /* indigo-950 */
+  --muted-foreground: 148 163 184; /* slate-400 */
+}
+
+@layer base {
+  * {
+    @apply border-slate-200 dark:border-white/10;
+  }
+  body {
+    @apply bg-paper text-ink dark:bg-indigo-950 dark:text-slate-100;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brass-400 ring-offset-2 ring-offset-paper dark:ring-offset-indigo-950;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Tiptap blog content styling */
+.prose-blog h1 { @apply font-display text-3xl mt-8 mb-4 text-indigo-900 dark:text-white scroll-mt-24; }
+.prose-blog h2 { @apply font-display text-2xl mt-8 mb-3 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
+.prose-blog h3 { @apply font-display text-xl mt-6 mb-2 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
+.prose-blog h4 { @apply font-display text-lg mt-5 mb-2 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
+.prose-blog p { @apply mb-4 leading-relaxed text-slate-700 dark:text-slate-300; }
+.prose-blog a { @apply text-brass-600 dark:text-brass-400 underline underline-offset-2; }
+.prose-blog mark { @apply rounded px-0.5 py-px; }
+.prose-blog ul { @apply list-disc pl-6 mb-4; }
+.prose-blog ol { @apply list-decimal pl-6 mb-4; }
+.prose-blog img { @apply rounded-md my-6; }
+.prose-blog blockquote { @apply border-l-4 border-brass-400 pl-4 italic text-slate-600 dark:text-slate-400 my-4; }
+
+/* Tables inserted via the rich text editor */
+.prose-blog table {
+  @apply w-full my-6 border-collapse overflow-hidden rounded-md border border-slate-200 dark:border-white/10 text-sm;
+}
+.prose-blog th, .prose-blog td {
+  @apply border border-slate-200 dark:border-white/10 px-3 py-2 text-left align-top;
+}
+.prose-blog th {
+  @apply bg-indigo-50 dark:bg-white/5 font-semibold text-indigo-900 dark:text-white;
+}
+.prose-blog tr:nth-child(even) td {
+  @apply bg-slate-50/50 dark:bg-white/[0.02];
+}
+
+/* Editorial treatment for the article body on the blog detail page */
+.prose-blog--lead > p:first-of-type {
+  @apply text-lg text-slate-700;
+}
+.prose-blog--lead > p:first-of-type::first-letter {
+  @apply float-left mr-3 mt-1 font-display text-6xl font-semibold leading-[0.8] text-indigo-700;
+}

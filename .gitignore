@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+.env.local
+*.log
+
+# User-uploaded images (served from disk, not checked into git)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Deployment logs (PM2 + deploy.sh)
+logs/
