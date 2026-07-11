@@ -9,20 +9,7 @@ export function Footer({ phone, email }: { phone?: string; email?: string }) {
         <div>
           <h3 className="font-display text-lg font-semibold text-white">{siteConfig.shortName}</h3>
           <p className="mt-3 text-sm text-slate-300">{siteConfig.description}</p>
-          <div className="mt-4 flex gap-3">
-            <a href={siteConfig.social.facebook} aria-label="Facebook" className="text-slate-300 hover:text-brass-400">
-              <Facebook size={18} />
-            </a>
-            <a href={siteConfig.social.instagram} aria-label="Instagram" className="text-slate-300 hover:text-brass-400">
-              <Instagram size={18} />
-            </a>
-            <a href={siteConfig.social.linkedin} aria-label="LinkedIn" className="text-slate-300 hover:text-brass-400">
-              <Linkedin size={18} />
-            </a>
-            <a href={siteConfig.social.youtube} aria-label="YouTube" className="text-slate-300 hover:text-brass-400">
-              <Youtube size={18} />
-            </a>
-          </div>
+         
         </div>
 
         <div>
