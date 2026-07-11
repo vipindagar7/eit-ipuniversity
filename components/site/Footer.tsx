@@ -41,9 +41,6 @@ export function Footer({ phone, email }: { phone?: string; email?: string }) {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wide text-brass-400">Contact</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-300">
-            <li className="flex items-start gap-2">
-              <MapPin size={16} className="mt-0.5 shrink-0" /> {siteConfig.contact.address}
-            </li>
             <li className="flex items-center gap-2">
               <Phone size={16} /> {phone || siteConfig.contact.phone}
             </li>
