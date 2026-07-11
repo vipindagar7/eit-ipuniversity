@@ -68,17 +68,17 @@ export const siteConfig = {
   ],
   locale: "en_IN",
   themeColor: "#1A2547",
-  // twitterHandle: "@eitfaridabad",
+  // twitterHandle: "@",
   contact: {
-    email: "admissions@yourdomain.com",
-    phone: "+91-00000-00000",
-    address: "Echelon Institute of Technology, Faridabad, Haryana, India",
+    email: "info@ipuniversity.in",
+    phone: "+91-8882392472",
+    address: "",
   },
   // social: {
-  //   facebook: "https://facebook.com/eitfaridabad",
-  //   instagram: "https://instagram.com/eitfaridabad",
-  //   linkedin: "https://linkedin.com/company/eitfaridabad",
-  //   youtube: "https://youtube.com/@eitfaridabad",
+  //   facebook: "https://facebook.com/",
+  //   instagram: "https://instagram.com/",
+  //   linkedin: "https://linkedin.com/company/",
+  //   youtube: "https://youtube.com/",
   // },
 } as const;
 
