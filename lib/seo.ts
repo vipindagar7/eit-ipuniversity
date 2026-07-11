@@ -40,8 +40,7 @@ export function buildMetadata(opts: {
       card: "summary_large_image",
       title,
       description,
-      images: [image],
-      site: siteConfig.twitterHandle,
+      images: [image]
     },
   };
 }
