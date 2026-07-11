@@ -35,6 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
+<meta name="google-site-verification" content="BAx_pBkXfFDeGRU6sxbml_bjbEYySjYvmrP37N6JY6M" />
       </head>
       <body className="font-body bg-paper text-ink antialiased transition-colors dark:bg-indigo-950 dark:text-slate-100">
         <a
