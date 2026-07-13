@@ -20,9 +20,6 @@ export function Header({ phone }: { phone?: string }) {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <Image src={siteConfig.logo.light} alt={siteConfig.shortName} width={36} height={36} priority className="dark:hidden" />
           <Image src={siteConfig.logo.dark} alt={siteConfig.shortName} width={36} height={36} priority className="hidden dark:block" />
-          <span className="font-display text-lg font-semibold text-indigo-700 dark:text-white">
-            {siteConfig.shortName}
-          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

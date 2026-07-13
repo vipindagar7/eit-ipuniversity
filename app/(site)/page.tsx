@@ -53,7 +53,7 @@ export default async function HomePage() {
               <Button asChild size="lg">
                 <Link href="/counselling">Get Free Counselling</Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="brass">
                 <Link href="/colleges">Compare Colleges</Link>
               </Button>
             </div>
