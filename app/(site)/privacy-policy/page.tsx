@@ -19,9 +19,9 @@ export default function PrivacyPolicyPage() {
 
       <div className="prose-blog mt-8">
         <p>
-          This Privacy Policy explains how {siteConfig.name} ("we", "us", "our") collects, uses,
-          and protects information when you visit {siteConfig.url} or use our counselling and
-          college comparison services (the "Site").
+          This Privacy Policy explains how {siteConfig.name} ("the Site", "we", "us", "our")
+          collects, uses, and protects information when you visit {siteConfig.url} or use our
+          counselling and college comparison services.
         </p>
 
         <h2>Information We Collect</h2>

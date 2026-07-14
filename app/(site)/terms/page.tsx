@@ -20,8 +20,8 @@ export default function TermsPage() {
       <div className="prose-blog mt-8">
         <p>
           These Terms of Service ("Terms") govern your use of {siteConfig.url} (the "Site"),
-          operated by {siteConfig.legalName}. By using the Site, you agree to these Terms. If you
-          do not agree, please don't use the Site.
+          operating under the name {siteConfig.name}. By using the Site, you agree to these
+          Terms. If you do not agree, please don't use the Site.
         </p>
 
         <h2>Using the Site</h2>
@@ -37,6 +37,26 @@ export default function TermsPage() {
           <li>Attempt to gain unauthorized access to any part of the Site or its systems</li>
           <li>Use the Site to transmit spam, malware, or harmful content</li>
         </ul>
+
+        <h2>No Official Affiliation</h2>
+        <p>
+          {siteConfig.name} is an independent platform and is not the official website of Guru
+          Gobind Singh Indraprastha University ("GGSIPU" or "the University"). We are not
+          affiliated with, endorsed by, sponsored by, or in any way officially connected with
+          GGSIPU or any of the colleges affiliated with it, except where a specific partnership
+          is explicitly stated on this Site.
+        </p>
+        <p>
+          All university names, college names, and logos referenced on this Site are the
+          property of their respective owners and are used solely for identification and
+          informational purposes. For official, authoritative information regarding admissions,
+          counselling schedules, seat allotment, and university policies, please refer to the
+          University's official website at{" "}
+          <a href="https://ipu.ac.in" target="_blank" rel="noopener noreferrer">
+            ipu.ac.in
+          </a>
+          .
+        </p>
 
         <h2>College Information &amp; Rankings</h2>
         <p>
@@ -57,9 +77,8 @@ export default function TermsPage() {
         <h2>Intellectual Property</h2>
         <p>
           All content on the Site — including text, graphics, logos, and blog articles — is owned
-          by or licensed to {siteConfig.legalName}, unless otherwise noted. You may not reproduce,
-          distribute, or create derivative works from this content without our prior written
-          permission.
+          by or licensed to us, unless otherwise noted. You may not reproduce, distribute, or
+          create derivative works from this content without our prior written permission.
         </p>
 
         <h2>Third-Party Links</h2>
@@ -77,9 +96,9 @@ export default function TermsPage() {
 
         <h2>Limitation of Liability</h2>
         <p>
-          To the fullest extent permitted by law, {siteConfig.legalName} shall not be liable for
-          any indirect, incidental, or consequential damages arising from your use of the Site or
-          reliance on information provided through it.
+          To the fullest extent permitted by law, we shall not be liable for any indirect,
+          incidental, or consequential damages arising from your use of the Site or reliance on
+          information provided through it.
         </p>
 
         <h2>Changes to These Terms</h2>

@@ -9,7 +9,6 @@ export function Footer({ phone, email }: { phone?: string; email?: string }) {
         <div>
           <h3 className="font-display text-lg font-semibold text-white">{siteConfig.shortName}</h3>
           <p className="mt-3 text-sm text-slate-300">{siteConfig.description}</p>
-         
         </div>
 
         <div>
@@ -41,6 +40,9 @@ export function Footer({ phone, email }: { phone?: string; email?: string }) {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wide text-brass-400">Contact</h4>
           <ul className="mt-3 space-y-2 text-sm text-slate-300">
+            <li className="flex items-start gap-2">
+              <MapPin size={16} className="mt-0.5 shrink-0" /> {siteConfig.contact.address}
+            </li>
             <li className="flex items-center gap-2">
               <Phone size={16} /> {phone || siteConfig.contact.phone}
             </li>
@@ -51,8 +53,25 @@ export function Footer({ phone, email }: { phone?: string; email?: string }) {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-4 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} {siteConfig.legalName}. All rights reserved.
+      <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-slate-400">
+        <p>
+          © {new Date().getFullYear()} {siteConfig.legalName}. All rights reserved.
+        </p>
+        <p className="mt-1">
+          This is an independent college guidance and counselling platform. It is not the
+          official website of Guru Gobind Singh Indraprastha University and is not affiliated
+          with, endorsed by, or operated by the University. For official admission information,
+          visit{" "}
+          <a
+            href="https://ipu.ac.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-white"
+          >
+            ipu.ac.in
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );
