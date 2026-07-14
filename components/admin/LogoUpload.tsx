@@ -29,7 +29,7 @@ export function LogoUpload({
     setUploading(true);
 
     try {
-      const blob = square ? await cropImageToSquare(file, 512) : file;
+      const blob = file
 
       const formData = new FormData();
       formData.append("file", blob, square ? "logo.png" : file.name);
