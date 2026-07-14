@@ -8,6 +8,7 @@ import { getSettings } from "@/lib/settings";
 import { Button } from "@/components/ui/button";
 import { CollegeCard } from "@/components/college/CollegeCard";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { FAQSection } from "@/components/admin/FAQSection";
 import { InlineCounsellingCard } from "@/components/forms/InlineCounsellingCard";
 import { courseCategories } from "@/lib/data";
 
@@ -139,6 +140,8 @@ export default async function HomePage() {
             )}
           </div>
         </div>
+
+         <FAQSection />
       </section>
     </>
   );
