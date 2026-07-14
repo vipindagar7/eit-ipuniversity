@@ -67,7 +67,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
               alt={blog.title}
               fill
               priority
-              className="object-cover opacity-90"
+              className="object-contain opacity-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-indigo-900 via-indigo-900/60 to-transparent" />
             <div className="container relative flex h-full max-w-3xl flex-col justify-end pb-10">

@@ -10,7 +10,7 @@ export function BlogCard({ blog }: { blog: any }) {
     >
       <div className="relative h-44 w-full bg-indigo-100 dark:bg-indigo-900/50">
         {blog.coverImage && (
-          <Image src={blog.coverImage} alt={blog.title} fill className="object-cover" />
+          <Image src={blog.coverImage} alt={blog.title} fill className="object-contain" />
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">

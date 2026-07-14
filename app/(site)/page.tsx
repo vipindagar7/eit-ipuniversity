@@ -8,8 +8,9 @@ import { getSettings } from "@/lib/settings";
 import { Button } from "@/components/ui/button";
 import { CollegeCard } from "@/components/college/CollegeCard";
 import { BlogCard } from "@/components/blog/BlogCard";
-import { FAQSection } from "@/components/admin/FAQSection";
 import { InlineCounsellingCard } from "@/components/forms/InlineCounsellingCard";
+import { FAQSection } from "@/components/admin/FAQSection";
+import { BannerSlot } from "@/components/site/BannerSlot";
 import { courseCategories } from "@/lib/data";
 
 export const metadata = buildMetadata({
@@ -54,7 +55,7 @@ export default async function HomePage() {
               <Button asChild size="lg">
                 <Link href="/counselling">Get Free Counselling</Link>
               </Button>
-              <Button asChild size="lg" variant="brass">
+              <Button asChild size="lg" variant="outline">
                 <Link href="/colleges">Compare Colleges</Link>
               </Button>
             </div>
@@ -140,9 +141,13 @@ export default async function HomePage() {
             )}
           </div>
         </div>
-
-         <FAQSection />
       </section>
+
+      <div className="container py-4">
+        <BannerSlot placement="home" />
+      </div>
+
+      <FAQSection />
     </>
   );
 }

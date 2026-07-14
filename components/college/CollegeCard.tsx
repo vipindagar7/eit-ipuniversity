@@ -10,7 +10,7 @@ export function CollegeCard({ college }: { college: any }) {
     >
       <div className="relative h-40 w-full bg-indigo-100 dark:bg-indigo-900/50">
         {college.coverImage && (
-          <Image src={college.coverImage} alt={college.name} fill className="object-cover" />
+          <Image src={college.coverImage} alt={college.name} fill className="object-contain" />
         )}
         {college.isFeatured && (
           <span className="absolute left-3 top-3 rounded-full bg-brass-400 px-2 py-0.5 text-xs font-semibold text-indigo-900">

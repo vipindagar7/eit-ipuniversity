@@ -3,6 +3,7 @@ import Blog from "@/models/Blog";
 import { buildMetadata } from "@/lib/seo";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { blogCategories } from "@/lib/data";
+import { BannerSlot } from "@/components/site/BannerSlot";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -61,6 +62,10 @@ export default async function BlogListPage({
             {c}
           </Link>
         ))}
+      </div>
+
+      <div className="mt-6">
+        <BannerSlot placement="blog-listing" />
       </div>
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

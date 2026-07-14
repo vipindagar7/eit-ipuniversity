@@ -6,6 +6,7 @@ import { buildMetadata, collegeJsonLd } from "@/lib/seo";
 import { stripHtml } from "@/lib/utils";
 import { Star, MapPin, CalendarDays, BadgeCheck } from "lucide-react";
 import { InlineCounsellingCard } from "@/components/forms/InlineCounsellingCard";
+import { BannerSlot } from "@/components/site/BannerSlot";
 import type { Metadata } from "next";
 
 export const revalidate = 1800;
@@ -45,7 +46,7 @@ export default async function CollegeDetailPage({ params }: { params: Promise<{ 
 
       {college.coverImage && (
         <div className="relative mb-6 h-64 w-full overflow-hidden rounded-lg">
-          <Image src={college.coverImage} alt={college.name} fill className="object-cover" />
+          <Image src={college.coverImage} alt={college.name} fill className="object-contain" />
         </div>
       )}
 
@@ -113,6 +114,10 @@ export default async function CollegeDetailPage({ params }: { params: Promise<{ 
       )}
 
       <div className="mt-10">
+        <BannerSlot placement="college-sidebar" />
+      </div>
+
+      <div className="mt-6">
         <InlineCounsellingCard
           title={`Considering ${college.name}?`}
           subtitle="Talk to a free counsellor before you apply — no cost, no obligation."
