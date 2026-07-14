@@ -15,6 +15,7 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import { ArticleContent } from "@/components/blog/ArticleContent";
 import { BackToTop } from "@/components/blog/BackToTop";
 import { InlineCounsellingCard } from "@/components/forms/InlineCounsellingCard";
+import { BannerSlot } from "@/components/site/BannerSlot";
 
 export const revalidate = 900;
 
@@ -123,6 +124,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             <div className="sticky top-24 flex flex-col gap-8">
               <TableOfContents headings={headings} />
               <ShareButtons url={shareUrl} title={blog.title} />
+              <BannerSlot placement="blog-sidebar" />
             </div>
           </aside>
 
@@ -164,6 +166,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             {/* Mobile share row */}
             <div className="mt-6 sm:hidden">
               <ShareButtons url={shareUrl} title={blog.title} />
+            </div>
+
+            {/* Banner — sidebar rail already shows this on desktop; this covers mobile/tablet */}
+            <div className="mt-8 lg:hidden">
+              <BannerSlot placement="blog-sidebar" />
             </div>
 
             {/* CTA — inline counselling form */}

@@ -127,6 +127,15 @@ export const blogCategories = [
   "College Reviews",
 ] as const;
 
+
+export const bannerPlacements = [
+  { value: "blog-sidebar", label: "Blog article — sidebar" },
+  { value: "blog-listing", label: "Blog listing page" },
+  { value: "home", label: "Home page" },
+  { value: "college-sidebar", label: "College detail — sidebar" },
+] as const;
+
+
 // Default SEO fallback used by generateMetadata() when a page doesn't
 // override title/description.
 export const defaultSeo = {

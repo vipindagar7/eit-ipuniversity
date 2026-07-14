@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { LayoutDashboard, Newspaper, Building2, Users, Settings as SettingsIcon, LogOut } from "lucide-react";
+import { LayoutDashboard, Newspaper, Building2, Users, Image as ImageIcon, Settings as SettingsIcon, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/blogs", label: "Blogs", icon: Newspaper },
   { href: "/admin/colleges", label: "Colleges", icon: Building2 },
+  { href: "/admin/banners", label: "Banners", icon: ImageIcon },
   { href: "/admin/leads", label: "Leads", icon: Users },
   { href: "/admin/settings", label: "Settings", icon: SettingsIcon },
 ];
