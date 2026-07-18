@@ -17,7 +17,7 @@ export const metadata = buildMetadata({
   path: "/",
 });
 
-export const revalidate = 3600; // ISR: refresh homepage hourly for SEO freshness
+export const revalidate = 3600;
 
 const trustStats = [
   { label: "Students Counselled", value: "5,000+", icon: Users },
