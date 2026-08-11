@@ -9,7 +9,7 @@ echo "========================================"
 echo ""
 echo "📥 Pulling latest code..."
 echo ""
-cd /home/eit-ipuniversity
+cd /var/www/eit-ipuniversity
 git pull origin main
 
 # ───────────────── DEPENDENCIES ─────────────────

@@ -11,7 +11,7 @@
 module.exports = {
   apps: [
     {
-      name: "IPU-ipuniversity",
+      name: "eit-ipuniversity",
       script: "node_modules/next/dist/bin/next",
       args: "start -p 3009",
       cwd: __dirname,
