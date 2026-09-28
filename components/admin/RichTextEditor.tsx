@@ -28,8 +28,10 @@ import {
   Palette,
   Highlighter,
   Ban,
+  Code2,
+  Eye,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FONT_OPTIONS = [
   { label: "Default font", value: "" },
@@ -94,6 +96,12 @@ export function RichTextEditor({
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showHighlightMenu, setShowHighlightMenu] = useState(false);
 
+  // Visual (Tiptap WYSIWYG) vs HTML source mode. In HTML mode the toolbar
+  // is hidden and a raw <textarea> takes over, so you can type or paste
+  // markup directly instead of using the formatting buttons.
+  const [mode, setMode] = useState<"visual" | "html">("visual");
+  const [htmlDraft, setHtmlDraft] = useState(value);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -124,6 +132,28 @@ export function RichTextEditor({
     },
   });
 
+  // Keep the HTML textarea's draft in sync if the editor's content changes
+  // from outside this component (e.g. loading a different post into the form).
+  useEffect(() => {
+    if (mode === "html") setHtmlDraft(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  function switchToHtml() {
+    if (!editor) return;
+    setHtmlDraft(editor.getHTML());
+    setMode("html");
+  }
+
+  function switchToVisual() {
+    if (!editor) return;
+    // Push whatever was typed in the textarea back into the Tiptap document
+    // so the toolbar/buttons reflect it, then continue as normal.
+    editor.commands.setContent(htmlDraft, false);
+    onChange(editor.getHTML());
+    setMode("visual");
+  }
+
   if (!editor) return null;
 
   const btn = (active: boolean) =>
@@ -150,8 +180,26 @@ export function RichTextEditor({
   return (
     <div>
       <div className="flex flex-wrap items-center gap-1 rounded-t-md border border-slate-200 bg-slate-50 p-1.5 dark:border-white/10 dark:bg-white/5">
+        {/* Visual / HTML source toggle — always visible, works in both modes */}
+        <button
+          type="button"
+          className={`flex items-center gap-1.5 rounded px-2 py-1 text-xs font-medium ${
+            mode === "html"
+              ? "bg-indigo-700 text-white"
+              : "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/10"
+          }`}
+          onClick={() => (mode === "html" ? switchToVisual() : switchToHtml())}
+          title={mode === "html" ? "Switch to visual editor" : "Edit raw HTML"}
+        >
+          {mode === "html" ? <Eye size={14} /> : <Code2 size={14} />}
+          {mode === "html" ? "Visual" : "HTML"}
+        </button>
+
+        <span className="mx-1 h-5 w-px bg-slate-200 dark:bg-white/10" aria-hidden />
+
+        <fieldset disabled={mode === "html"} className="contents">
         <select
-          className="rounded border border-slate-200 bg-white px-2 py-1 text-xs text-slate-600 dark:border-white/10 dark:bg-indigo-900/40 dark:text-slate-300"
+          className="rounded border border-slate-200 bg-white px-2 py-1 text-xs text-slate-600 dark:border-white/10 dark:bg-indigo-900/40 dark:text-slate-300 disabled:opacity-40"
           value={currentHeadingLevel()}
           onChange={(e) => {
             const level = Number(e.target.value);
@@ -354,8 +402,30 @@ export function RichTextEditor({
             </option>
           ))}
         </select>
+        </fieldset>
       </div>
-      <EditorContent editor={editor} />
+
+      {mode === "html" ? (
+        <div>
+          <textarea
+            value={htmlDraft}
+            onChange={(e) => {
+              setHtmlDraft(e.target.value);
+              onChange(e.target.value);
+            }}
+            spellCheck={false}
+            className="min-h-[220px] w-full rounded-b-md border border-t-0 border-slate-200 bg-slate-950 p-4 font-mono text-xs text-slate-100 focus:outline-none dark:border-white/10"
+            placeholder="<p>Write or paste HTML here…</p>"
+          />
+          <p className="mt-1.5 text-xs text-slate-400">
+            Raw HTML mode. Switch back to Visual to keep using the toolbar — your markup is kept
+            either way. Disallowed tags (scripts, iframes, etc.) are stripped for security when the
+            post is saved.
+          </p>
+        </div>
+      ) : (
+        <EditorContent editor={editor} />
+      )}
     </div>
   );
 }

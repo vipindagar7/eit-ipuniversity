@@ -17,31 +17,42 @@ import sanitizeHtml from "sanitize-html";
 export function sanitizeRichText(html: string): string {
   return sanitizeHtml(html, {
     allowedTags: [
-      "h1", "h2", "h3", "h4",
-      "p", "br", "strong", "b", "em", "i", "u", "s", "mark",
-      "ul", "ol", "li", "blockquote",
-      "a",
+      "h1", "h2", "h3", "h4", "h5", "h6",
+      "p", "br", "hr", "strong", "b", "em", "i", "u", "s", "mark", "sub", "sup",
+      "ul", "ol", "li", "blockquote", "pre", "code",
+      "a", "img",
       "table", "thead", "tbody", "tr", "th", "td",
-      "span",
+      "div", "span", "figure", "figcaption",
     ],
     allowedAttributes: {
       a: ["href", "target", "rel"],
+      img: ["src", "alt", "title", "width", "height", "style"],
       span: ["style"],
+      div: ["style"],
+      p: ["style"],
       mark: ["style"],
-      td: ["colspan", "rowspan"],
-      th: ["colspan", "rowspan"],
+      td: ["colspan", "rowspan", "style"],
+      th: ["colspan", "rowspan", "style"],
     },
     // Only these URL schemes are allowed in href/src — blocks javascript:,
-    // data:, vbscript:, and similar script-execution vectors.
+    // data:, vbscript:, and similar script-execution vectors. data: is
+    // allowed only for <img src> (e.g. small inline/base64 images), never
+    // for links.
     allowedSchemes: ["http", "https", "mailto"],
-    allowedSchemesByTag: {},
-    // Only allow the `color` and `background-color` CSS properties through
-    // (used by the editor's text color / highlight tools) — nothing else,
-    // so no CSS-based attacks (e.g. `expression()`, background url() exfil).
+    allowedSchemesByTag: {
+      img: ["http", "https", "data"],
+    },
+    // Only allow a small, safe set of CSS properties through — used by the
+    // editor's text color / highlight / font tools and by hand-typed HTML —
+    // nothing that enables CSS-based attacks (e.g. `expression()`,
+    // background url() exfil, position-based clickjacking).
     allowedStyles: {
       "*": {
         color: [/^#[0-9a-f]{3,6}$/i, /^rgb\(/, /^rgba\(/],
         "background-color": [/^#[0-9a-f]{3,6}$/i, /^rgb\(/, /^rgba\(/],
+        "font-family": [/^[a-zA-Z0-9\s,'"-]+$/],
+        "font-weight": [/^(normal|bold|[1-9]00)$/],
+        "text-align": [/^(left|right|center|justify)$/],
       },
     },
     // Force every link to carry safe rel attributes regardless of what was submitted.
