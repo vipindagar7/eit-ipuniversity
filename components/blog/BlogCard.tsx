@@ -8,9 +8,15 @@ export function BlogCard({ blog }: { blog: any }) {
       href={`/blog/${blog.slug}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-indigo-900/30"
     >
-      <div className="relative h-44 w-full bg-indigo-100 dark:bg-indigo-900/50">
+      <div className="relative h-44 w-full overflow-hidden bg-indigo-100 dark:bg-indigo-900/50">
         {blog.coverImage && (
-          <Image src={blog.coverImage} alt={blog.title} fill className="object-contain" />
+          <Image
+            src={blog.coverImage}
+            alt={blog.title}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">

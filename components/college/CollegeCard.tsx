@@ -8,9 +8,15 @@ export function CollegeCard({ college }: { college: any }) {
       href={`/colleges/${college.slug}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-indigo-900/30"
     >
-      <div className="relative h-40 w-full bg-indigo-100 dark:bg-indigo-900/50">
+      <div className="relative h-40 w-full overflow-hidden bg-indigo-100 dark:bg-indigo-900/50">
         {college.coverImage && (
-          <Image src={college.coverImage} alt={college.name} fill className="object-contain" />
+          <Image
+            src={college.coverImage}
+            alt={college.name}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
         )}
         {college.isFeatured && (
           <span className="absolute left-3 top-3 rounded-full bg-brass-400 px-2 py-0.5 text-xs font-semibold text-indigo-900">
