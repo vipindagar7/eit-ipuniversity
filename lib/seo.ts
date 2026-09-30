@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig, defaultSeo } from "@/lib/data";
-import { stripHtml } from "@/lib/utils";
+import { stripHtml, readingTime } from "@/lib/utils";
 
 /**
  * Build a consistent Metadata object for any page. Pass only what's
@@ -19,6 +19,7 @@ export function buildMetadata(opts: {
   const description = opts.description || defaultSeo.description;
   const url = `${siteConfig.url}${opts.path || ""}`;
   const image = opts.image || `${siteConfig.url}${siteConfig.ogImage}`;
+  const twitterHandle = (siteConfig as any).twitterHandle as string | undefined;
 
   return {
     title,
@@ -26,13 +27,25 @@ export function buildMetadata(opts: {
     keywords: opts.keywords?.length ? opts.keywords : [...siteConfig.keywords],
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical: url },
-    robots: opts.noIndex ? { index: false, follow: false } : { index: true, follow: true },
+    robots: opts.noIndex
+      ? { index: false, follow: false }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
     openGraph: {
       title,
       description,
       url,
       siteName: siteConfig.name,
-      images: [{ url: image, width: 1200, height: 630 }],
+      images: [{ url: image, width: 1200, height: 630, alt: title }],
       locale: siteConfig.locale,
       type: "website",
     },
@@ -40,7 +53,8 @@ export function buildMetadata(opts: {
       card: "summary_large_image",
       title,
       description,
-      images: [image]
+      images: [image],
+      ...(twitterHandle ? { site: twitterHandle, creator: twitterHandle } : {}),
     },
   };
 }
@@ -50,8 +64,11 @@ export function blogPostingJsonLd(blog: {
   title: string;
   excerpt: string;
   slug: string;
+  content?: string;
   coverImage?: string;
   author: string;
+  category?: string;
+  tags?: string[];
   publishedAt?: Date;
   updatedAt?: Date;
 }) {
@@ -64,7 +81,17 @@ export function blogPostingJsonLd(blog: {
     author: { "@type": "Person", name: blog.author },
     datePublished: blog.publishedAt?.toISOString(),
     dateModified: (blog.updatedAt || blog.publishedAt)?.toISOString(),
-    mainEntityOfPage: `${siteConfig.url}/blog/${blog.slug}`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${siteConfig.url}/blog/${blog.slug}` },
+    url: `${siteConfig.url}/blog/${blog.slug}`,
+    inLanguage: siteConfig.locale.replace("_", "-"),
+    articleSection: blog.category,
+    keywords: blog.tags?.length ? blog.tags.join(", ") : undefined,
+    ...(blog.content
+      ? {
+          wordCount: stripHtml(blog.content).split(/\s+/).filter(Boolean).length,
+          timeRequired: `PT${readingTime(blog.content)}M`,
+        }
+      : {}),
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
@@ -80,6 +107,7 @@ export function collegeJsonLd(college: {
   state: string;
   description: string;
   logo?: string;
+  coverImage?: string;
   rating?: number;
 }) {
   return {
@@ -88,7 +116,9 @@ export function collegeJsonLd(college: {
     name: college.name,
     description: stripHtml(college.description),
     url: `${siteConfig.url}/colleges/${college.slug}`,
+    image: college.coverImage || college.logo,
     logo: college.logo,
+    inLanguage: siteConfig.locale.replace("_", "-"),
     address: {
       "@type": "PostalAddress",
       addressLocality: college.city,
@@ -105,5 +135,80 @@ export function collegeJsonLd(college: {
           },
         }
       : {}),
+  };
+}
+
+/**
+ * Site-wide Organization + WebSite JSON-LD. Rendered once, in the root
+ * layout, on every page. This is what tells Google "this is the entity
+ * behind the site" (feeds the Knowledge Panel / sitelinks) and, via the
+ * WebSite SearchAction, makes the site eligible for the sitelinks search
+ * box in results — both things a WordPress+Yoast site gets by default and
+ * a hand-rolled Next.js site otherwise skips.
+ */
+export function organizationJsonLd() {
+  const social = ((siteConfig as any).social || {}) as Record<string, string>;
+  const sameAs = Object.values(social).filter(Boolean);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteConfig.url}/#organization`,
+    name: siteConfig.legalName,
+    alternateName: siteConfig.shortName,
+    url: siteConfig.url,
+    logo: {
+      "@type": "ImageObject",
+      url: `${siteConfig.url}${siteConfig.logo.light}`,
+    },
+    ...(sameAs.length ? { sameAs } : {}),
+    ...(siteConfig.contact?.phone
+      ? {
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: siteConfig.contact.phone,
+            contactType: "customer service",
+            email: siteConfig.contact.email,
+            areaServed: "IN",
+          },
+        }
+      : {}),
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
+    url: siteConfig.url,
+    name: siteConfig.name,
+    publisher: { "@id": `${siteConfig.url}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/blog?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/**
+ * BreadcrumbList JSON-LD — drives the breadcrumb trail Google shows under
+ * the blue link in search results instead of the raw URL. Pass the trail
+ * from root to current page, e.g. [{name:"Blog",path:"/blog"},{name:title}]
+ * (the last item can omit `path` — it's the current page).
+ */
+export function breadcrumbJsonLd(items: { name: string; path?: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      ...(item.path ? { item: `${siteConfig.url}${item.path}` } : {}),
+    })),
   };
 }

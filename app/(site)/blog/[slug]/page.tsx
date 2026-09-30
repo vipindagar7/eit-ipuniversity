@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { ChevronRight, Clock } from "lucide-react";
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
-import { buildMetadata, blogPostingJsonLd } from "@/lib/seo";
+import { buildMetadata, blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { formatDate, readingTime, initials } from "@/lib/utils";
 import { addHeadingIds } from "@/lib/toc";
 import { siteConfig } from "@/lib/data";
@@ -48,6 +48,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   if (!blog) notFound();
 
   const jsonLd = blogPostingJsonLd(blog);
+  const crumbs = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: blog.title },
+  ]);
   const minutes = readingTime(blog.content);
   const shareUrl = `${siteConfig.url}/blog/${blog.slug}`;
   const { html, headings } = addHeadingIds(blog.content);
@@ -57,6 +62,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
       <ReadingProgressBar />
       <BackToTop />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
 
       {/* Magazine-style hero */}
       <header className="relative">

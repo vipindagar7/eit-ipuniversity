@@ -40,13 +40,32 @@
 .prose-blog h2 { @apply font-display text-2xl mt-8 mb-3 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
 .prose-blog h3 { @apply font-display text-xl mt-6 mb-2 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
 .prose-blog h4 { @apply font-display text-lg mt-5 mb-2 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
+.prose-blog h5 { @apply font-display text-base font-semibold mt-4 mb-2 text-indigo-700 dark:text-brass-200 scroll-mt-24; }
+.prose-blog h6 { @apply font-display text-sm font-semibold uppercase tracking-wide mt-4 mb-2 text-slate-600 dark:text-slate-300 scroll-mt-24; }
 .prose-blog p { @apply mb-4 leading-relaxed text-slate-700 dark:text-slate-300; }
 .prose-blog a { @apply text-brass-600 dark:text-brass-400 underline underline-offset-2; }
 .prose-blog mark { @apply rounded px-0.5 py-px; }
 .prose-blog ul { @apply list-disc pl-6 mb-4; }
 .prose-blog ol { @apply list-decimal pl-6 mb-4; }
-.prose-blog img { @apply rounded-md my-6; }
+.prose-blog hr { @apply my-8 border-slate-200 dark:border-white/10; }
+.prose-blog sub { @apply text-xs; }
+.prose-blog sup { @apply text-xs; }
+/* max-width/height:auto keeps hand-typed <img width=...> from HTML mode
+   from overflowing the column or shifting layout on load (Core Web Vitals). */
+.prose-blog img {
+  @apply rounded-md my-6 h-auto max-w-full;
+}
+.prose-blog figure { @apply my-6; }
+.prose-blog figure img { @apply my-0; }
+.prose-blog figcaption { @apply mt-2 text-center text-sm text-slate-500 dark:text-slate-400; }
 .prose-blog blockquote { @apply border-l-4 border-brass-400 pl-4 italic text-slate-600 dark:text-slate-400 my-4; }
+.prose-blog pre {
+  @apply my-6 overflow-x-auto rounded-md bg-slate-900 p-4 text-sm text-slate-100;
+}
+.prose-blog pre code { @apply bg-transparent p-0 text-inherit; }
+.prose-blog code {
+  @apply rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.85em] text-indigo-700 dark:bg-white/10 dark:text-brass-200;
+}
 
 /* Tables inserted via the rich text editor */
 .prose-blog table {

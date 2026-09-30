@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { connectDB } from "@/lib/db";
 import College from "@/models/College";
-import { buildMetadata, collegeJsonLd } from "@/lib/seo";
+import { buildMetadata, collegeJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { stripHtml } from "@/lib/utils";
 import { Star, MapPin, CalendarDays, BadgeCheck } from "lucide-react";
 import { InlineCounsellingCard } from "@/components/forms/InlineCounsellingCard";
@@ -39,10 +41,24 @@ export default async function CollegeDetailPage({ params }: { params: Promise<{ 
   if (!college) notFound();
 
   const jsonLd = collegeJsonLd(college);
+  const crumbs = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Colleges", path: "/colleges" },
+    { name: college.name },
+  ]);
 
   return (
     <article className="container max-w-3xl py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
+
+      <nav className="mb-4 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400" aria-label="Breadcrumb">
+        <Link href="/" className="hover:text-indigo-700 dark:hover:text-white">Home</Link>
+        <ChevronRight size={12} />
+        <Link href="/colleges" className="hover:text-indigo-700 dark:hover:text-white">Colleges</Link>
+        <ChevronRight size={12} />
+        <span className="text-indigo-900 dark:text-white">{college.name}</span>
+      </nav>
 
       {college.coverImage && (
         <div className="relative mb-6 h-64 w-full overflow-hidden rounded-lg">
